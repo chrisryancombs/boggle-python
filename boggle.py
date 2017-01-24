@@ -1,26 +1,33 @@
+# CS470 Boggle solver
+# Christopher Combs Spring 2017
+
 import sys
 import time
 import math
 
-#print(sys.argv[1])
-# Get board from text fil and remove all spaces and newlines
-boggleboard = open('sampleboard.txt', 'r')
+# Start counting time and collect command line args
+starttime = time.time()
+dictfile = sys.argv[1]
+boardfile = sys.argv[2]
+
+# Read dictionary text file and populate the set
+dictionary = open(dictfile, 'r')
+wordset = frozenset(line.strip() for line in dictionary)
+
+# Get board from text file and remove all spaces and newlines
+boggleboard = open(boardfile, 'r')
 boardtext = boggleboard.read()
 boardtext = boardtext.replace(' ', '')
 boardtext = boardtext.replace('\n', '')
 
 # Find grid dimensions, cast to int
 gridsize = (int)(math.sqrt(len(boardtext)))
-print(gridsize)
 
 # Create 2D array and populate with text
 grid = [['' for i in range(gridsize)] for i in range(gridsize)]
 for i in range(len(boardtext)):
     grid[i%4][i//4] = boardtext[i]
 
-print(grid)
-
-starttime = time.time()
 elapsedtime = time.time() - starttime
 
 #Begin writing output file
